@@ -1,0 +1,35 @@
+.Home {
+  padding: 50px 50px 0;
+}
+
+.Home * {
+  margin: 0;
+  color: rgb(116,136,153);
+}
+
+.Home h1, .-Home-card-name {
+  text-align: center;
+}
+
+.Home img {
+  height: 263px;
+  object-fit: contain;
+}
+
+.Home-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 185px);
+  grid-gap: 40px;
+  margin-top: 30px;
+}
+
+.Home-card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 21px;
+  margin-top: 5px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
