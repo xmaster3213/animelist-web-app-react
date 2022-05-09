@@ -1,28 +1,27 @@
 import '../css/Home.css';
-import React from 'react';
+import Default from './Default';
 
-class Home extends React.Component {
+class Home extends Default {
 
-#request;
-
-  constructor(props) {
-    super(props);
-    this.#request = require('../functions/functionalities');
+  componentDidMount() {
+    const cards = this._request.get('http://localhost:8081/api/anime/');
+    cards.then(data => {
+      this.setState({data});
+    }, (error) => console.log(error));
   }
 
-  render() {
+  _renderData() {
     return (
       <div className='Home'>
         <h1>Animelist</h1>
         <div className='Home-cards-container'>
-          {this.#createCards()}
+          {this.#createCards(this.state.data)}
         </div>
       </div>
     );
   }
 
-  #createCards() {
-    const cards = this.#request.get('http://localhost:8081/api/anime/');
+  #createCards(cards) {
     return (
       cards.map(card => this.#createCard(card.nome, card.immagine_copertina))
     );
@@ -30,7 +29,7 @@ class Home extends React.Component {
 
   #createCard(name, image) {
     return (
-      <div key={name} className='Home-card'>
+      <div key={name} className='Home-card' onClick={() => this.props.fun('ANIME')}>
         <img src={image} alt='Anime cover'></img>
         <span className='Home-card-name'>{name}</span>
       </div>
