@@ -6,18 +6,18 @@ import PageManager from './functions/PageManager';
 
 
 
-function loadPage(path) {
-  const Page = require(path + '.js');
+function loadPage(name) {
+  Element = pageManager.pageClasses[name];
   root.render(
     <React.StrictMode>
-      <Page />
+      {Element}
     </React.StrictMode>
   );
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const pageManager = new PageManager('HOME');
-loadPage(pageManager.getCurrentPage().getPath());
+const pageManager = new PageManager(loadPage);
+loadPage('HOME');
 
 
 
