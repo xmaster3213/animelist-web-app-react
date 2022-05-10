@@ -1,7 +1,7 @@
 import '../css/Home.css';
-import Default from './Default';
+import Logged from './Logged';
 
-class Home extends Default {
+class Home extends Logged {
 
   componentDidMount() {
     const cards = this._request.get('http://localhost:8081/api/anime/');
@@ -10,7 +10,7 @@ class Home extends Default {
     }, (error) => console.log(error));
   }
 
-  _renderData() {
+  _renderBody() {
     return (
       <div className='Home'>
         <h1>Animelist</h1>
@@ -29,7 +29,7 @@ class Home extends Default {
 
   #createCard(name, image) {
     return (
-      <div key={name} className='Home-card' onClick={() => this.props.fun('ANIME')}>
+      <div key={name} className='Home-card' onClick={() => this.props.redirect('ANIME')}>
         <img src={image} alt='Anime cover'></img>
         <span className='Home-card-name'>{name}</span>
       </div>
