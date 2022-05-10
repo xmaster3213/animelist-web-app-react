@@ -21,8 +21,17 @@ class Logged extends Default {
           <div className='Logged-navbar-user'>
             <img src={require('./test.jpg')}></img>
             <div className='Logged-navbar-dropdow'>
-              Profile
-              Logout
+              <div className='Logged-navbar-dropdow-content'>
+                <div className='Logged-navbar-dropdown-content-element' onClick={() => this.props.reference('PROFILE')}>
+                  <span>Profile</span>
+                </div>
+                <div className='Logged-navbar-dropdown-content-element' onClick={() => this.props.reference('ANIMELIST')}>
+                  <span>Animelist</span>
+                </div>
+                <div className='Logged-navbar-dropdown-content-element' onClick={() => this.#logout()}>
+                  <span>Logout</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -33,6 +42,11 @@ class Logged extends Default {
   // @Abstract
   _renderBody() {
     throw new Error('This method is not yet implemented');
+  }
+
+  #logout() {
+    // TODO: Logout from the session
+    this.props.reference('LOGIN');
   }
 
 

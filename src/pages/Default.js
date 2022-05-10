@@ -1,3 +1,4 @@
+import '../css/Default.css';
 import React from 'react';
 
 class Default extends React.Component {
