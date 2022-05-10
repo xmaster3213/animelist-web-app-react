@@ -1,19 +1,13 @@
-import '../css/Home.css';
-import React from 'react';
+import '../css/Anime.css';
+import Logged from './Logged';
 
-class Anime extends React.Component {
+class Anime extends Logged {
 
-#request;
-state = {
-  cards: null,
-}
-
-  constructor(props) {
-    super(props);
-    this.#request = require('../functions/functionalities');
+  componentDidMount() {
+    this.setState({data: '123'});
   }
 
-  render() {
+  _renderBody() {
     return <h1>HELLO</h1>
   }
 
