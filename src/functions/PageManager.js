@@ -7,8 +7,8 @@ class PageManager {
 
   constructor(loadPageFunction) {
     this.pageClasses = {
-      HOME: <Home fun={loadPageFunction} />,
-      ANIME: <Anime fun={loadPageFunction} />,
+      HOME: <Home redirect={loadPageFunction} />,
+      ANIME: <Anime redirect={loadPageFunction} />,
     };
   }
 
