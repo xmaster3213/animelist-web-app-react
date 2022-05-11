@@ -1,6 +1,7 @@
 import '../css/Default.css';
 import React from 'react';
 
+// @Generic
 class Default extends React.Component {
 
 _request;

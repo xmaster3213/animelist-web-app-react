@@ -2,22 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import PageManager from './functions/PageManager';
+import Home from './pages/Home'
 
 
 
-
-function loadPage(name) {
-  Element = pageManager.pageClasses[name];
+function loadPage(Component) {
   root.render(
     <React.StrictMode>
-      {Element}
+      {Component}
     </React.StrictMode>
   );
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const pageManager = new PageManager(loadPage);
-loadPage('HOME');
+loadPage(<Home redirect={loadPage} />);
 
 
 

@@ -13,6 +13,7 @@
 }
 
 .Logged-navbar-content {
+  height: 100%;
   padding: 0 50px;
   display: grid;
   grid-template-columns: 75px 1fr 75px;

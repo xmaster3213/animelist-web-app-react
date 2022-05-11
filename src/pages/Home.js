@@ -1,5 +1,6 @@
 import '../css/Home.css';
 import Logged from './Logged';
+import Anime from './Anime';
 
 class Home extends Logged {
 
@@ -23,13 +24,13 @@ class Home extends Logged {
 
   #createCards(cards) {
     return (
-      cards.map(card => this.#createCard(card.nome, card.immagine_copertina))
+      cards.map(card => this.#createCard(card.id, card.nome, card.immagine_copertina))
     );
   }
 
-  #createCard(name, image) {
+  #createCard(id, name, image) {
     return (
-      <div key={name} className='Home-card' onClick={() => this.props.redirect('ANIME')}>
+      <div key={id} className='Home-card' onClick={() => this.props.redirect(<Anime redirect={this.props.redirect} id={id} />)}>
         <img src={image} alt='Anime cover'></img>
         <span className='Home-card-name'>{name}</span>
       </div>
