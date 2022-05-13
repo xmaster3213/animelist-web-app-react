@@ -1,5 +1,4 @@
 async function request(url, method, data = null) {
-  var data;
   if (data == null) {
     data = await fetch(url, {
       method: method
@@ -10,10 +9,14 @@ async function request(url, method, data = null) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: data
+      body: JSON.stringify(data)
     });
+
   }
-  return data.json();
+  return {
+    status: data.status,
+    data: data.json()
+  };
 }
 
 export function get(url) {
