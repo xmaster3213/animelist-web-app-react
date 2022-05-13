@@ -48,7 +48,7 @@ class Login extends Default {
   }
 
   #onSubmitHandler(event) {
-    // TODO: check credential
+    // Check credentials
     const resPromise = this._request.post('http://localhost:8081/api/user/check_credentials/', {
       username: this.state.input.username,
       password: this.state.input.password
