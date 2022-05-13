@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import PageManager from './functions/PageManager';
 import Login from './pages/Login'
 
 
@@ -15,7 +14,6 @@ function loadPage(Component) {
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const pageManager = new PageManager(loadPage);
 loadPage(<Login redirect={loadPage} />);
 
 

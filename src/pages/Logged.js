@@ -1,9 +1,19 @@
 import '../css/Logged.css';
 import Default from './Default';
 import Home from './Home'
+import Login from './Login'
+
 
 // @Generic
 class Logged extends Default {
+
+  constructor(props) {
+    if (!sessionStorage.getItem('user')) {
+      props.redirect(<Login redirect={props.redirect} />);
+    } 
+    super(props);
+    this._request = require('../functions/functionalities');
+  }
 
   _renderData() {
     return (
@@ -18,10 +28,10 @@ class Logged extends Default {
     return (
       <div className='Logged-navbar'>
         <div className='Logged-navbar-content'>
-          <img src={process.env.PUBLIC_URL + '/logo.png'} onClick={() => this.props.redirect(<Home redirect = {this.props.redirect} />)} ></img>
+          <img src={process.env.PUBLIC_URL + '/logo.png'} alt='Site logo' onClick={() => this.props.redirect(<Home redirect = {this.props.redirect} />)} ></img>
           <h2>Search bar..</h2>
           <div className='Logged-navbar-user'>
-            <img src={require('./test.jpg')}></img>
+            <img src={require('./test.jpg')} alt='Profile'></img>
             <div className='Logged-navbar-dropdow'>
               <div className='Logged-navbar-dropdow-content'>
                 <div className='Logged-navbar-dropdown-content-element' onClick={() => this.props.redirect('PROFILE')}>
@@ -47,8 +57,8 @@ class Logged extends Default {
   }
 
   #logout() {
-    // TODO: Logout from the session
-    this.props.reference('LOGIN');
+    sessionStorage.removeItem('user');
+    this.props.redirect(<Login redirect={this.props.redirect} />);
   }
 
 

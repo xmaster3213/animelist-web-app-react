@@ -36,6 +36,7 @@
   display: flex;
   align-content: center;
   justify-content: center;
+  border: 0;
 }
 
 .Anime-container-header-cover_weapper-button:hover {

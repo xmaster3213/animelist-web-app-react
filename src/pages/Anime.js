@@ -4,15 +4,20 @@ import Logged from './Logged';
 class Anime extends Logged {
 
   componentDidMount() {
-    const anime = this._request.get('http://localhost:8081/api/anime/' + this.props.id);
-    anime.then(data => {
-      this.setState({
-        'data': {
-          'anime': data
-        },
-        'navtab': 0
-      });
-    }, (error) => console.log(error));
+    const resPromise = this._request.get('http://localhost:8081/api/anime/' + this.props.id);
+    resPromise.then((res) => {
+      if (res.status === 200) {
+        res.data.then(data => {
+          this.setState({
+            'data': {
+              'anime': data
+            },
+            'navtab': 0
+          });
+        }, (error) => console.log(error));
+
+      }
+    });
   }
 
   _renderBody() {
@@ -21,10 +26,7 @@ class Anime extends Logged {
         <div className='Anime-container-header'>
           <div className='Anime-container-header-cover_wrapper'>
             <img src={this.state.data.anime.immagine_copertina} alt='Anime cover'></img>
-            <div className='Anime-container-header-cover_weapper-button'>
-              {/* <span>{list.stato}</span> */}
-              <a onClick={this.#addAnimeToList()} >Plan to Watch</a>
-            </div>
+            <button className='Anime-container-header-cover_weapper-button' onClick={this.#addAnimeToList()}>Plan to Watch</button>
           </div>
           <div className='Anime-container-header-content'>
             <h1 className='Anime-container-header-content-title'>{this.state.data.anime.nome}</h1>
@@ -50,7 +52,7 @@ class Anime extends Logged {
   }
 
   #checkSelectedNavtab(navtab) {
-    if(this.state.navtab == navtab) {
+    if(this.state.navtab === navtab) {
       return 'Anime-container-body-navtabs-item anime-container-body-navbar-item-selected';
     } else {
       return 'Anime-container-body-navtabs-item';
@@ -58,7 +60,7 @@ class Anime extends Logged {
   }
 
   #getCurrentTabContent() {
-    if (this.state.navtab == 0) {
+    if (this.state.navtab === 0) {
       return (
         <div className='Anime-container-body-content-infos_container'>
           <div className='Anime-container-body-content-infos_container-infos'>
@@ -81,11 +83,11 @@ class Anime extends Logged {
           </div>
           <div>
             <span>Trailer</span>
-            <iframe className='Anime-container-body-content-infos_container-trailer' src={this.state.data.anime.trailer} frameBorder='0' allowFullScreen='allowfullscreen'></iframe>
+            <iframe title='Anime trailer' className='Anime-container-body-content-infos_container-trailer' src={this.state.data.anime.trailer} frameBorder='0' allowFullScreen='allowfullscreen'></iframe>
           </div>
         </div>
       );
-    } else if (this.state.navtab == 1) {
+    } else if (this.state.navtab === 1) {
       return <h1>1</h1>
     } else {
       return <h1>2</h1>
