@@ -11,11 +11,44 @@ class Logged extends Default {
 
   constructor(props) {
     // Check if logged
-    if (!sessionStorage.getItem('user')) {
+    if (!sessionStorage.getItem('token')) {
       props.redirect(<Login redirect={props.redirect} />);
-    } 
-    super(props);
-    this._request = require('../functions/functionalities');
+    } else {
+      super(props);
+      this._request = require('../functions/functionalities');
+    }
+  }
+
+  componentDidMount() {
+    const resPromise = this.requestGet('http://localhost:8081/api/user/' + JSON.parse(sessionStorage.getItem('user')).username, sessionStorage.getItem('token'));
+    resPromise.then((res) => {
+      if (res.ok) {
+        res.data.then(data => {
+          sessionStorage.setItem('user', JSON.stringify(data));
+        }, (error) => console.log(error));
+      }
+    });
+    this._componetDidMountContinue();
+  }
+
+  requestGet(url, token = null) {
+    const response = this._request.get(url, token);
+    return this.#request(response);
+  }
+
+  requestDel(url, token = null) {
+    const response = this._request.del(url, token);
+    return this.#request(response);
+  }
+
+  requestPost(url, data, token = null) {
+    const response = this._request.post(url, data, token);
+    return this.#request(response);
+  }
+
+  requestPut(url, data, token = null) {
+    const response = this._request.put(url, data, token);
+    return this.#request(response);
   }
 
   _renderData() {
@@ -36,7 +69,7 @@ class Logged extends Default {
           {/* TODO: Implement search bar */}
           <h2>Search bar..</h2>
           <div className='Logged-navbar-user'>
-            <img src={require('./test.jpg')} alt='Profile'></img>
+            <img src={JSON.parse(sessionStorage.getItem('user')).immagine} alt='Profile'></img>
             <div className='Logged-navbar-dropdow'>
               <div className='Logged-navbar-dropdow-content'>
                 <div className='Logged-navbar-dropdown-content-element' onClick={() => this.props.redirect(<Profile redirect = {this.props.redirect} />)}>
@@ -62,9 +95,26 @@ class Logged extends Default {
     throw new Error('This method is not yet implemented');
   }
 
+  // @Abstract
+  // Call this instead of componentDidMount to recive user data every time the page mount
+  // You can call componentDidMount if you prefer to user the user data saved inside the sessionStorage
+  _componetDidMountContinue() {
+    throw new Error('This method is not yet implemented');
+  }
+
   #logout() {
-    sessionStorage.removeItem('user');
+    sessionStorage.clear();
     this.props.redirect(<Login redirect={this.props.redirect} />);
+  }
+
+  async #request(response) {
+    response = await response;
+    if (response.status === 401) {
+      this.#logout();
+      return response;
+    } else {
+      return response;
+    }
   }
 
 

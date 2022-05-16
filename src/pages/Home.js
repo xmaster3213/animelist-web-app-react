@@ -4,10 +4,10 @@ import Anime from './Anime';
 
 class Home extends Logged {
 
-  componentDidMount() {
-    const resPromise = this._request.get('http://localhost:8081/api/anime/');
+  _componetDidMountContinue() {
+    const resPromise = this.requestGet('http://localhost:8081/api/anime/');
     resPromise.then((res) => {
-      if (res.status === 200) {
+      if (res.ok) {
         res.data.then(data => {
           this.setState({data});
         }, (error) => console.log(error));
