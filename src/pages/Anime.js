@@ -1,21 +1,54 @@
 import '../css/Anime.css';
 import Logged from './Logged';
+import Character from './Character';
 
 class Anime extends Logged {
 
   componentDidMount() {
-    const resPromise = this._request.get('http://localhost:8081/api/anime/' + this.props.id);
+    this.setState({
+      navtab: 0
+    });
+
+    // Anime infos
+    var resPromise = this.requestGet('http://localhost:8081/api/anime/' + this.props.id);
     resPromise.then((res) => {
-      if (res.status === 200) {
+      if (res.ok) {
         res.data.then(data => {
           this.setState({
-            'data': {
-              'anime': data
-            },
-            'navtab': 0
+            data: {
+              anime: data
+            }
           });
         }, (error) => console.log(error));
-
+      }
+    });
+    // Characters and Dubber infos
+    resPromise = this.requestGet('http://localhost:8081/api/character/withDubber/' + this.props.id);
+    resPromise.then((res) => {
+      if (res.ok) {
+        res.data.then(data => {
+          this.setState({
+            data: {
+              ...this.state.data,
+              characters: data
+            }
+          });
+        }, (error) => console.log(error));
+      }
+    });
+    // Episodes infos
+    // TODO: Set correct url
+    resPromise = this.requestGet('http://localhost:8081/api/episode/' + this.props.id);
+    resPromise.then((res) => {
+      if (res.ok) {
+        res.data.then(data => {
+          this.setState({
+            data: {
+              ...this.state.data,
+              episodes: data
+            }
+          });
+        }, (error) => console.log(error));
       }
     });
   }
@@ -58,9 +91,26 @@ class Anime extends Logged {
       return 'Anime-container-body-navtabs-item';
     } 
   }
-
+  
+  #createCharacterCards(characters) {
+    if (!characters) {
+      return;
+    }
+    return characters.map(character => {
+      return (
+        <div key={character.character_id} className='Anime-container-body-content-charcaters_container-character_card'>
+          <div className='Anime-container-body-content-charcaters_container-character_card-character' onClick={() => this.props.redirect(<Character redirect={this.props.redirect} />)}>
+            <img src={character.character_image} alt={'Character ' + character.character_name}></img>
+            <span>{character.character_name}</span>
+          </div>
+        </div>
+      );
+    });
+  }
+  
   #getCurrentTabContent() {
     if (this.state.navtab === 0) {
+      // Anime infos
       return (
         <div className='Anime-container-body-content-infos_container'>
           <div className='Anime-container-body-content-infos_container-infos'>
@@ -88,12 +138,18 @@ class Anime extends Logged {
         </div>
       );
     } else if (this.state.navtab === 1) {
-      return <h1>1</h1>
+      // Anime characters
+      return (
+        <div className='Anime-container-body-content-charcaters_container'>
+          {this.#createCharacterCards(this.state.data.characters)}
+        </div>
+      );
     } else {
       return <h1>2</h1>
     }
   }
 
 }
+
 
 export default Anime;

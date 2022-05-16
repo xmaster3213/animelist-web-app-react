@@ -82,11 +82,14 @@
   background-color: #f5f5f5;
 }
 
+.Anime-container-body-content {
+  margin-top: 30px;
+}
+
 .Anime-container-body-content-infos_container {
   display: grid;
   grid-template-columns: 200px 1fr;
   grid-column-gap: 40px;
-  margin-top: 30px;
 }
 
 .Anime-container-body-content-infos_container-infos {
@@ -124,4 +127,46 @@
   font-weight: 500;
   color: rgb(92,114,138);
   margin-bottom: 5px;
+}
+
+.Anime-container-body-content-charcaters_container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 30px;
+  grid-row-gap: 15px;
+}
+
+.Anime-container-body-content-charcaters_container-character_card {
+  border-radius: 3px;
+  display: inline-grid;
+  grid-template-columns: 50% 50%;
+  height: 80px;
+  overflow: hidden;
+  background-color: white;
+}
+
+.Anime-container-body-content-charcaters_container-character_card-character {
+  display: inline-grid;
+  grid-template-columns: 60px 1fr;
+  grid-template-areas: "image content";
+}
+
+.Anime-container-body-content-charcaters_container-character_card-character:hover {
+  cursor: pointer;
+}
+
+.Anime-container-body-content-charcaters_container-character_card-character > img {
+  border-radius: 3px;
+  grid-area: image;
+  width: 100%;
+  max-height: 80px;
+}
+
+.Anime-container-body-content-charcaters_container-character_card-character > span {
+  border-radius: 3px;
+  grid-area: content;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
 }
