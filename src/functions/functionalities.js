@@ -1,39 +1,59 @@
-async function request(url, method, data = null) {
+async function _request(url, method, token, data = null) {
   if (data == null) {
-    data = await fetch(url, {
-      method: method,
-      headers: { //TODO: Edit header only for auth request and save token on login/register
-        'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InhtYXN0ZXIiLCJpYXQiOjE2NTI0NTMxMTcsImV4cCI6MTY1MjQ2MDMxN30.Xa0YnkLzUfeeMJ07KH80_gfw_GETyMOSbjMWJzqSDiw'
-      }
-    });
-  } else {
+    // GET request
     data = await fetch(url, {
       method: method,
       headers: {
-        'Content-Type': 'application/json'
+        'x-access-token': token
+      }
+    });
+  } else {
+    // POST request
+    data = await fetch(url, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token
       },
       body: JSON.stringify(data)
     });
 
   }
   return {
+    ok: data.ok,
     status: data.status,
-    data: data.json()
+    data: data.ok ? data.json() : null
   };
 }
 
-export function get(url) {
-  return request(url, 'GET');
+// Return obj {
+//  ok = boolean; True if response status was >= 200 and < 300, False otherwise
+//  data = obj; Json obj if ok == True, null if ok == False
+// }
+export function get(url, token = null) {
+  return _request(url, 'GET', token);
 }
 
-export function del(url) {
-  return request(url, 'DELETE');
+// Return obj {
+//  ok = boolean; True if response status was >= 200 and < 300, False otherwise
+//  data = obj; Json obj if ok == True, null if ok == False
+// }
+export function del(url, token = null) {
+  return _request(url, 'DELETE', token);
 }
 
-export function post(url, data) {
-  return request(url, 'POST', data);
+// Return obj {
+//  ok = boolean; True if response status was >= 200 and < 300, False otherwise
+//  data = obj; Json obj if ok == True, null if ok == False
+// }
+export function post(url, data, token = null) {
+  return _request(url, 'POST', token, data);
 }
 
-export function put(url, data) {
-  return request(url, 'PUT', data);
+// Return obj {
+//  ok = boolean; True if response status was >= 200 and < 300, False otherwise
+//  data = obj; Json obj if ok == True, null if ok == False
+// }
+export function put(url, data, token = null) {
+  return _request(url, 'PUT', token, data);
 }
