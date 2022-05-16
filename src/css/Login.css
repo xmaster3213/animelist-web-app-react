@@ -12,13 +12,18 @@
   width: 100%;
 }
 
-.Login-container-form {
-  height: 100%;
+.Login-container-form_container {
   width: 100%;
-  padding: 0 20%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+
+.Login-container-form {
+  width: 100%;
+  padding: 0 20%;
 }
 
 .Login-container-form-input {
@@ -43,6 +48,7 @@
 }
 
 .Login-container-form > button {
+  width: 100%;
   border: 0;
   height: 45px;
   background-color: #1266f1;
@@ -59,4 +65,26 @@
   cursor: pointer;
   background-color: #0c56d0;
 }
+
+.Login-container-form_container > p {
+  color: black;
+  text-align: center;
+  margin-top: 5px;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.Login-container-form_container > p > button {
+  color: #1266f1;
+  background-color: transparent;
+  border: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.Login-container-form_container > p > button:hover {
+  cursor: pointer;
+  color: #0e52c1;
+}
+
 
